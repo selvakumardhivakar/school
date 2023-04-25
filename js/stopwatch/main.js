@@ -15,7 +15,7 @@ let display = document.getElementById("display");
 var ul = document.getElementById("list");
 
 let startTime,
-  createdInterval,
+  intervalId,
   isLap = false;
 
 function calcStartTime() {
@@ -23,8 +23,11 @@ function calcStartTime() {
 }
 
 function startWatch() {
+  if (!intervalId) {
+    clearIntervals();
+  }
   calcStartTime();
-  createdInterval = setInterval(() => {
+  intervalId = setInterval(() => {
     let time = Date.now() - startTime;
     let seconds = Math.floor(time / 1000);
     let minutes = Math.floor(seconds / 60);
@@ -36,7 +39,7 @@ function startWatch() {
 }
 
 function stopWatch() {
-  clearInterval(createdInterval);
+  clearIntervals();
   isLap = false;
 }
 
@@ -49,11 +52,21 @@ function lapWatch() {
 
 function resetWatch() {
   isLap = false;
-  clearInterval(createdInterval);
+  clearIntervals();
   display.innerHTML = "00:00:00";
   ul.innerHTML = "";
 }
 
 function pad(digits) {
   return digits < 10 ? "0" + digits : digits;
+}
+
+function clearIntervals() {
+  // Get a reference to the last interval + 1
+  const interval_id = window.setInterval(function () {},
+  Number.MAX_SAFE_INTEGER);
+  // Clear any timeout/interval up to that id
+  for (let i = 1; i < interval_id; i++) {
+    window.clearInterval(i);
+  }
 }
