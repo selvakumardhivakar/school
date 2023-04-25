@@ -1,24 +1,59 @@
-import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
+let startButton = document.getElementById("start");
+startButton.addEventListener("click", startWatch);
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+let stopButton = document.getElementById("stop");
+stopButton.addEventListener("click", stopWatch);
 
-setupCounter(document.querySelector('#counter'))
+let resetButton = document.getElementById("reset");
+resetButton.addEventListener("click", resetWatch);
+
+let lapButton = document.getElementById("lap");
+lapButton.addEventListener("click", lapWatch);
+
+let display = document.getElementById("display");
+
+var ul = document.getElementById("list");
+
+let startTime,
+  createdInterval,
+  isLap = false;
+
+function calcStartTime() {
+  startTime = Date.now();
+}
+
+function startWatch() {
+  calcStartTime();
+  createdInterval = setInterval(() => {
+    let time = Date.now() - startTime;
+    let seconds = Math.floor(time / 1000);
+    let minutes = Math.floor(seconds / 60);
+    let hours = Math.floor(minutes / 60);
+    display.innerHTML = `${pad(hours % 24)}:${pad(minutes % 60)}:${pad(
+      seconds % 60
+    )}`;
+  }, 1000);
+}
+
+function stopWatch() {
+  clearInterval(createdInterval);
+  isLap = false;
+}
+
+function lapWatch() {
+  isLap = true;
+  var li = document.createElement("li");
+  li.appendChild(document.createTextNode(display.innerText));
+  ul.appendChild(li);
+}
+
+function resetWatch() {
+  isLap = false;
+  clearInterval(createdInterval);
+  display.innerHTML = "00:00:00";
+  ul.innerHTML = "";
+}
+
+function pad(digits) {
+  return digits < 10 ? "0" + digits : digits;
+}
