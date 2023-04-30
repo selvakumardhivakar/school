@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #202020;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -14,17 +14,20 @@
   -webkit-text-size-adjust: 100%;
 }
 body {
+  text-align: center;
+}
+.container {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  color: #242424;
+  height: 70vh;
 }
 .calculator {
-  font-size: 2rem;
   padding: 10px;
-  border-radius: 10px;
+  font-size: 2rem;
+  color: #242424;
   background-color: aliceblue;
+  border-radius: 10px;
 }
 .screen {
   text-align: end;
@@ -64,7 +67,7 @@ body {
   padding: 5px;
   border-radius: 10px;
 }
-.clear:hover{
+.clear:hover {
   background-color: rgb(255, 153, 0);
 }
 
